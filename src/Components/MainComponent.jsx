@@ -3,6 +3,7 @@ import { Button, Container, Row, Col } from "reactstrap"
 import ClaimComponent from './ClaimComponent';
 import menu from "../data/menu.json"
 import SingleDish from './SingleDish';
+import { token} from "../config"
 
 class MainComponent extends React.Component {
     state = {  }
@@ -11,7 +12,7 @@ class MainComponent extends React.Component {
 
         fetch("https://strive-school-testing-apis.herokuapp.com/api/movies/", {
             headers: {
-                "Authorization": "Basic dXNlcjMwOkU2dFlzNlBCenVmUmZzVlA" 
+                "Authorization": "Basic " + token 
             }
         }
         )
