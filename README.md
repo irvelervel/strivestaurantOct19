@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## SET YOUR API KEY 
+
+Create your config.js file into src, set token with your credentials to use the application
+
 ## Available Scripts
 
 In the project directory, you can run:
