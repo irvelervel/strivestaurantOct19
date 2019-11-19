@@ -7,8 +7,14 @@ import SingleDish from './SingleDish';
 class MainComponent extends React.Component {
     state = {  }
     render() { 
-
         console.log(menu)
+
+        fetch("https://strive-school-testing-apis.herokuapp.com/api/movies/", {
+            headers: {
+                "Authorization": "Basic dXNlcjMwOkU2dFlzNlBCenVmUmZzVlA" 
+            }
+        }
+        )
 
         return ( 
         <Container>
