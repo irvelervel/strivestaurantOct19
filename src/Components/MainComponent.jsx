@@ -1,16 +1,22 @@
 import React from 'react';
 import { Button, Container, Row, Col } from "reactstrap"
 import ClaimComponent from './ClaimComponent';
+import menu from "../data/menu.json"
+import SingleDish from './SingleDish';
 
 class MainComponent extends React.Component {
     state = {  }
     render() { 
+
+        console.log(menu)
+
         return ( 
         <Container>
             <Row>
                 <Col md="12">
                     <ClaimComponent />
-                </Col>
+                </Col>  
+                <SingleDish />
 
                 <Col md="4">
                     This is my main component
