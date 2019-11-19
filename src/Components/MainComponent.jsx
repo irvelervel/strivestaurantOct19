@@ -1,36 +1,32 @@
 import React from 'react';
 import { Button, Container, Row, Col } from "reactstrap"
 import ClaimComponent from './ClaimComponent';
-import menu from "../data/menu.json"
+import MyMenu from "../data/menu.json"
 import SingleDish from './SingleDish';
-import { token} from "../config"
 
 class MainComponent extends React.Component {
     state = {  }
     render() { 
-        console.log(menu)
-
-        fetch("https://strive-school-testing-apis.herokuapp.com/api/movies/", {
-            headers: {
-                "Authorization": "Basic " + token 
-            }
-        }
-        )
-
         return ( 
         <Container>
             <Row>
                 <Col md="12">
                     <ClaimComponent />
                 </Col>  
-                <SingleDish />
 
-                <Col md="4">
-                    This is my main component
+                <Col md="12">
+                    {/* Every time you have a map or a foreach, remember to specify the KEY for each item you are creating.
+                    Key is a props, usually you can use the second parameter of map or foreach as unique identified
+                    example:
+                    */}
+                    {MyMenu.map((menuEntry, index) => 
+                        <SingleDish dish={menuEntry} key={index} />
+                    )}
                 </Col>
-                <Col md="8">
-                    <Button color="primary">primary</Button>
-                </Col>
+
+                {/* <Col md="12">
+                    {this.state.myArray.map((entry, index) => <h2 key={index}>{entry}</h2>)}
+                </Col> */}
             </Row>
         </Container> );
     }
