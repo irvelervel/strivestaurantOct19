@@ -28,7 +28,6 @@ class ClaimComponent extends React.Component {
     }
 
     render() { 
-
         let menu = this.props.menuItems;
 
         return ( 

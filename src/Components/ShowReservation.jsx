@@ -18,15 +18,17 @@ class ShowReservation extends React.Component {
             }
             {!this.state.isLoading && 
                 <Container className="my-5">
-                    {this.state.reservations.length > 0 && this.state.reservations.map((reservation, index)=>
-                        <ListGroup key={index}  >
-                            <ListGroupItem>
-                                from: {reservation.name} for {reservation.numberOfPersons} at 
-                                {' '} <Moment format="YYYY/MM/DD hh:MM"  >{reservation.dateTime}</Moment>
-                                created at <Moment fromNow>{reservation.createdAt}</Moment>
-                            </ListGroupItem>
-                        </ListGroup>  
-                    )}
+                        <ListGroup >
+                            {this.state.reservations.length > 0 && this.state.reservations.map((reservation, index)=>
+                            
+                                    <ListGroupItem  key={index} >
+                                        from: {reservation.name} for {reservation.numberOfPersons} at 
+                                        {' '} <Moment format="YYYY/MM/DD hh:MM"  >{reservation.dateTime}</Moment>
+                                        created at <Moment fromNow>{reservation.createdAt}</Moment>
+                                    </ListGroupItem>
+                            
+                            )}
+                       </ListGroup>  
                     {this.state.reservations.length === 0 && <h1> No reservations at your restaurant</h1>}
                 </Container>
             }
@@ -44,7 +46,6 @@ class ShowReservation extends React.Component {
         console.log(response)
 
         let getReservationsResult = await response.json();
-
 
         this.setState({
             isLoading: false,

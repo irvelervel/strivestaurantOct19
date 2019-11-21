@@ -47,7 +47,6 @@ class ReservationComponent extends React.Component {
         this.setState({
                 isLoading: true
             })
-
         try{
         //1) send the request to the server
         let response = await fetch("https://strive-school-testing-apis.herokuapp.com/api/reservation",{
