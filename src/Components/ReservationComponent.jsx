@@ -15,7 +15,7 @@ class ReservationComponent extends React.Component {
      }
 
     handleInput = (ev) =>{
-        var input = ev.target;
+        var input = ev.currentTarget;
 
         let inputName = input.id;
         let reservation = this.state.reservation;
@@ -33,9 +33,23 @@ class ReservationComponent extends React.Component {
         console.log(this.state.reservation)
     }
 
+    // whoHasBeenClicked = (ev) => {
+    //     //CURRENTTARGET ==> Will always be the DOM element that has the event Listener attached!
+    //     //TARGET ==> Could be the DOM element that has the event Listener attached, or some of the child who bubbles on the event
+    //     console.log("this is the target", ev.target)
+    //     console.log("this is the currentTarget", ev.currentTarget)
+
+    //     ev.currentTarget.style.border = "1px solid red";
+    //     ev.target.style.border = "1px solid green";
+    // }
+
     render() { 
         return ( 
         <Container>
+            {/* <div onClick={this.whoHasBeenClicked}>
+                <h1>test 1 </h1>
+                <h2>test 2 </h2>
+            </div> */}
             <h3>Reserve your table now!</h3>
             <div>
                 <Row>
