@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row,Container, Col, Input, Button, FormGroup, Label } from "reactstrap"
+import { Row,Container, Col, Input, Button, FormGroup, Label, Alert, Spinner } from "reactstrap"
+import ShowReservation from './ShowReservation';
 
 
 class ReservationComponent extends React.Component {
@@ -11,26 +12,105 @@ class ReservationComponent extends React.Component {
             smoking: false,
             dateTime: "",
             specialRequests: ""
-        }
+        },
+        message: undefined,
+        errorMessage: undefined,
+        isLoading: false
      }
 
     handleInput = (ev) =>{
         var input = ev.currentTarget;
 
         let inputName = input.id;
-        let reservation = this.state.reservation;
+        let modifiedReservation = this.state.reservation;
         if (inputName === "smoking")
-            reservation[inputName] = input.checked;
+            modifiedReservation[inputName] = input.checked;
         else
-            reservation[inputName] = input.value;
+            modifiedReservation[inputName] = input.value;
 
-        this.setState({
-            reservation: reservation
+        this.setState({ //replacing current reservation object with the new, modified version
+            reservation: modifiedReservation
         })
     }
 
-    submitReservation = () => {
-        console.log(this.state.reservation)
+    //this ==> currentComponent 
+
+    submitReservation = async () => {
+        this.setState({
+                isLoading: true
+            })
+
+        try{
+        //1) send the request to the server
+        let response = await fetch("https://strive-school-testing-apis.herokuapp.com/api/reservation",{
+            method: "POST",
+            body: JSON.stringify(this.state.reservation),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        //2) show a message (success or failure)
+            if (response.ok){
+                this.setState({
+                    reservation: {
+                        name: "",
+                        phone: "",
+                        numberOfPersons: 1,
+                        smoking: false,
+                        dateTime: "",
+                        specialRequests: ""
+                    },
+                    message: "Reservation sent! See you soon!",
+                    errorMessage: undefined,
+                    isLoading: false
+                })
+
+                setTimeout(
+                    function() {
+                        this.setState({
+                            message: undefined,
+                        })
+                    }
+                    .bind(this),
+                    3000
+                );
+                //Show a message
+                //3) clean my form (take it to the initial status)
+            }
+            else{
+                this.setState({
+                    isLoading: false,
+                    message: undefined,
+                    errorMessage:"Something went wrong in the creation of the reservation. Please try later or contact us @ +39 80 822 544"
+                })
+
+                setTimeout(
+                    function() {
+                        this.setState({
+                            errorMessage: undefined,
+                        })
+                    }
+                    .bind(this),
+                    3000
+                );
+            }
+        }
+        catch{
+            this.setState({
+                message: undefined,
+                isLoading: false,
+                errorMessage:"Something went wrong in the creation of the reservation. Please try later or contact us @ +39 80 822 544"
+            })
+            setTimeout(
+                function() {
+                    this.setState({
+                        errorMessage: undefined,
+                    })
+                }
+                .bind(this),
+                3000
+            );
+        }
     }
 
     // whoHasBeenClicked = (ev) => {
@@ -95,11 +175,26 @@ class ReservationComponent extends React.Component {
                         <Label for="specialRequests">Special Requests</Label>
                         <Input type="textarea" id="specialRequests"  value={this.state.reservation.specialRequests} onChange={this.handleInput} ></Input>
                     </FormGroup>
-                    <Button onClick={this.submitReservation}>Submit Reservation</Button>
+                    <Row > 
+                        <FormGroup className="col-md-12">
+                            <Button  onClick={this.submitReservation}>Submit Reservation</Button>
+                        </FormGroup>
+                    </Row>
                     {/* Name, Phone, Number of persons, Smoking / Non Smoking, Date&Time, Special Requests */}
+                    <Row className="col-md-12">
+                        {this.state.isLoading && <Spinner type="grow" color="primary" /> }
+                        {this.state.message && <Alert color="success">
+                            {this.state.message}
+                        </Alert>}
+                        {this.state.errorMessage && <Alert color="danger">
+                            {this.state.errorMessage}
+                        </Alert>}
+                    </Row>
                 </Row>
             </div>
             <hr />
+
+            <ShowReservation />
         </Container> );
     }
 }

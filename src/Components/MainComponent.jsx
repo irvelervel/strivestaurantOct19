@@ -12,7 +12,7 @@ class MainComponent extends React.Component {
     state = { 
         selectedDish: undefined,
         searchString: ""
-     }
+    }
 
     selectDish = (whatever) => {
         this.setState({
