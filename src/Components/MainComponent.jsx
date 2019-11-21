@@ -31,8 +31,10 @@ class MainComponent extends React.Component {
         <Container>
             <Row>
                 <Col md="12">
-                    <ClaimComponent />
+                    <ClaimComponent menuItems={MyMenu} onSelectedDish={this.selectDish} />
                 </Col>  
+
+                { this.state.selectedDish && <DishDetails selectedDish={this.state.selectedDish} /> }
 
                 {/* 
                 { this.state.searchString === "strive" && <h1>Welcome Strivers!</h1> }
@@ -63,7 +65,7 @@ class MainComponent extends React.Component {
                 - functions */}
 
                 {/* This is the conditional rendering. The DishDetails is rendered ONLY if this.state.selectedDish has a value! */}
-                { this.state.selectedDish && <DishDetails selectedDish={this.state.selectedDish} /> }
+         
 
                 {/* <Col md="12">
                     {this.state.myArray.map((entry, index) => <h2 key={index}>{entry}</h2>)}

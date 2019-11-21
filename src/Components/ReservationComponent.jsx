@@ -21,12 +21,20 @@ class ReservationComponent extends React.Component {
     handleInput = (ev) =>{
         var input = ev.currentTarget;
 
-        let inputName = input.id;
+        let inputName = input.id; //=> name, numberOfPersons, phone...
         let modifiedReservation = this.state.reservation;
+
         if (inputName === "smoking")
             modifiedReservation[inputName] = input.checked;
+        // else if (inputName === "numberOfPersons")
+        //     modifiedReservation[inputName] = parseInt(input.value)
         else
             modifiedReservation[inputName] = input.value;
+
+        console.log("Event generate by ", input)
+        console.log("The id is", inputName)
+        console.log("the value is ", modifiedReservation[inputName])
+        console.log("therefore my reservation now is", modifiedReservation)
 
         this.setState({ //replacing current reservation object with the new, modified version
             reservation: modifiedReservation
@@ -137,8 +145,7 @@ class ReservationComponent extends React.Component {
                         <Label for="name">Name</Label>
                         <Input type="text" id="name" placeholder="Insert here your name" 
                                 value={this.state.reservation.name}
-                                onChange={this.handleInput}
-                                 />
+                                onChange={this.handleInput} />
                     </FormGroup>
                     <FormGroup className="col-md-6">
                         <Label for="phone">Phone</Label>

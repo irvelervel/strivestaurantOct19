@@ -7,7 +7,7 @@ class DishDetails extends React.Component {
         let dish = this.props.selectedDish;
 
         return ( 
-        <Container className="mt-5">
+        <Container className="my-5">
             <Row>
                 <Col md="4">
                     <img className="dish-detail-image" src={dish.image} alt="selected dish" ></img>
