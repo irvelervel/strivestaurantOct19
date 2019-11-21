@@ -5,6 +5,7 @@ import MyMenu from "../data/menu.json"
 import SingleDish from './SingleDish';
 import SimpleComponent from './SimpleComponent';
 import DishDetails from './DishDetails';
+import ReservationComponent from "./ReservationComponent"
 
 class MainComponent extends React.Component {
 
@@ -32,6 +33,15 @@ class MainComponent extends React.Component {
                 <Col md="12">
                     <ClaimComponent />
                 </Col>  
+
+                {/* 
+                { this.state.searchString === "strive" && <h1>Welcome Strivers!</h1> }
+
+                {this.state.selectedDish === undefined && <div>
+                    Click on a dish from the menu to see the details</div>} */}
+
+                    <ReservationComponent />
+
                 <Col md="12">
                     <Input type="text" placeholder="Search the menu" onChange={this.searchChange} value={this.state.searchString}  className="mb-5" />
                     {/* Every time you have a map or a foreach, remember to specify the KEY for each item you are creating.
@@ -39,12 +49,12 @@ class MainComponent extends React.Component {
                     example:
                     */}
                     {MyMenu
-                    .filter(dish => 
-                       dish.name.toLowerCase().includes(this.state.searchString) 
-                    || dish.description.toLowerCase().includes(this.state.searchString))
-                    .map((menuEntry, index) => 
-                        <SingleDish dish={menuEntry} key={index} onSelectedDish={this.selectDish} />
-                    )}
+                        .filter(dish => 
+                        dish.name.toLowerCase().includes(this.state.searchString) 
+                        || dish.description.toLowerCase().includes(this.state.searchString))
+                        .map((menuEntry, index) => 
+                            <SingleDish dish={menuEntry} key={index} onSelectedDish={this.selectDish} />
+                        )}
                 </Col>
 
                 {/* We can pass as prop:
