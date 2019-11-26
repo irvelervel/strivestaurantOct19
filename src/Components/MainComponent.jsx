@@ -1,90 +1,46 @@
-import React from 'react';
-import { Button, Container, Row, Col, Input } from "reactstrap"
-import ClaimComponent from './ClaimComponent';
-import MyMenu from "../data/menu.json"
-import SingleDish from './SingleDish';
-import SimpleComponent from './SimpleComponent';
-import DishDetails from './DishDetails';
-import ReservationComponent from "./ReservationComponent"
+import React from "react";
+import { Container, Row } from "reactstrap";
+import ReservationComponent from "./ReservationComponent";
+import HomePage from "./HomePage";
+import Menu from "./Menu";
+import Navigation from "./Navigation";
+import DishDetails from "./DishDetails";
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class MainComponent extends React.Component {
+  state = {
+    selectedDish: undefined,
+    searchString: ""
+  };
 
-    state = { 
-        selectedDish: undefined,
-        searchString: ""
-    }
+  selectDish = whatever => {
+    this.setState({
+      selectedDish: whatever
+    });
+  };
 
-    selectDish = (whatever) => {
-        this.setState({
-            selectedDish: whatever
-        })
-    }
+  searchChange = ev => {
+    this.setState({
+      searchString: ev.target.value.toLowerCase()
+    });
+  };
 
-    searchChange = (ev) =>{
-        this.setState({
-            searchString: ev.target.value.toLowerCase()
-        })
-    }
-
-    render() { 
-        return ( 
+  render() {
+    return (
+      <Router>
+        <Navigation />
         <Container>
-            <Row>
-                <Col md="12">
-                    <ClaimComponent menuItems={MyMenu} onSelectedDish={this.selectDish} />
-                </Col>  
-
-                { this.state.selectedDish && <DishDetails selectedDish={this.state.selectedDish} /> }
-
-                {/* 
-                { this.state.searchString === "strive" && <h1>Welcome Strivers!</h1> }
-
-                {this.state.selectedDish === undefined && <div>
-                    Click on a dish from the menu to see the details</div>} */}
-
-                    <ReservationComponent />
-
-                <Col md="12">
-                    <Input type="text" placeholder="Search the menu" onChange={this.searchChange} value={this.state.searchString}  className="mb-5" />
-                    {/* Every time you have a map or a foreach, remember to specify the KEY for each item you are creating.
-                    Key is a props, usually you can use the second parameter of map or foreach as unique identified
-                    example:
-                    */}
-                    {MyMenu
-                        .filter(dish => 
-                        dish.name.toLowerCase().includes(this.state.searchString) 
-                        || dish.description.toLowerCase().includes(this.state.searchString))
-                        .map((menuEntry, index) => 
-                            <SingleDish dish={menuEntry} key={index} onSelectedDish={this.selectDish} />
-                        )}
-                </Col>
-
-                {/* We can pass as prop:
-                - single values
-                - objects
-                - functions */}
-
-                {/* This is the conditional rendering. The DishDetails is rendered ONLY if this.state.selectedDish has a value! */}
-         
-
-                {/* <Col md="12">
-                    {this.state.myArray.map((entry, index) => <h2 key={index}>{entry}</h2>)}
-                </Col> */}
-            </Row>
-                {/* <Col md="12">
-                     <SimpleComponent  />
-                        <SimpleComponent  />
-                        <SimpleComponent  />
-                        <SimpleComponent  />
-                        <SimpleComponent  />
-                        <SimpleComponent  />
-                        <SimpleComponent  />
-                        <SimpleComponent  />
-                        <SimpleComponent  />
-                        <SimpleComponent  /> 
-                </Col> */}
-        </Container> );
-    }
+          <Row>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/reservation" component={ReservationComponent} />
+            <Route path="/menu" component={Menu} />
+            <Route path="/dishdetails/:dishId" component={DishDetails} />
+          </Row>
+        </Container>
+      </Router>
+    );
+  }
 }
- 
+
 export default MainComponent;
